@@ -1,0 +1,27 @@
+{% extends "base.html" %} 
+{% block title %}Мнение о фильме # {{ opinion.id }}{%endblock %} 
+{% block content %}
+<main>
+  <section class="container my-5">
+    <div class="row">
+      <h1>{{ opinion.title }}</h1>
+      <div class="col-12 col-lg-7 my-5">
+        <p>{{ opinion.text }}</p>
+        <p>
+          Больше о фильме: 
+          {% if opinion.source %}
+            <a href="{{ opinion.source }}">{{ opinion.source }}</a>
+          {% else %} источник не указан {% endif %}
+        </p>
+        <p>
+          Ссылка для друзей:
+          <a href=""></a>
+        </p>
+      </div>
+      <div class="col-12 col-lg-5">
+        <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/illustration.png') }}" alt="" />
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
