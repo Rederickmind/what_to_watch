@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- В тегах <link> обновлены адреса для подключения статики -->
+    <link rel="icon" href="{{ url_for('static', filename='img/fav/fav.ico') }}" type="image" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/fav/apple-touch-icon.png') }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/fav/favicon-32x32.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/fav/favicon-16x16.png') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <title>{{ opinion.title }}</title>
+  </head>
+
+  <body>
+    <header class="pt-3">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index_view') }}">
+            <!-- Здесь тоже обновлён адрес -->
+            <img src="{{ url_for('static', filename='img/logo.svg') }}" height="50" class="" alt="" />
+        </a>
+          <div class="d-flex justify-content-end">
+            <ul class="nav nav-pills">
+              <li class="nav-item pe-5">
+                <a class="nav-link" href="{{ url_for('add_opinion_view') }}">
+                  Добавить мнение о фильме
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('index_view') }}">
+                  Хочу другой фильм
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="container my-5">
+        <div class="row">
+          <h1>{{ opinion.title }}</h1>
+          <div class="col-12 col-lg-7 my-5">
+            <p>{{ opinion.text }}</p>
+
+            <p>
+                Больше о фильме: 
+                {% if opinion.source %}
+                  <a href="{{ opinion.source }}">{{ opinion.source }}</a>
+                {% else %}
+                  источник не указан 
+                {% endif %}
+            </p>
+            <p>
+              Ссылка для друзей:
+              <a href=""></a>
+            </p>
+          </div>
+          <div class="col-12 col-lg-5">
+            <!-- И здесь тоже -->
+            <img class="img-fluid mx-auto d-block" src="{{ url_for('static', filename='img/illustration.png') }}" alt="" />
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="fixed-bottom text-center py-3 bg-light">
+      <p class="small">© Что посмотреть</p>
+    </footer>
+  </body>
+</html>

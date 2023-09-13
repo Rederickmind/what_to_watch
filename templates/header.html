@@ -1,0 +1,23 @@
+<header class="pt-3">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+      <a class="navbar-brand" href="{{ url_for('index_view') }}">
+          <img src="{{ url_for('static', filename='img/logo.svg') }}" height="50" class="" alt="" />
+      </a>
+        <div class="d-flex justify-content-end">
+          <ul class="nav nav-pills">
+            <li class="nav-item pe-5">
+              <a class="nav-link" href="{{ url_for('add_opinion_view') }}">
+                Добавить мнение о фильме
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index_view') }}">
+                Хочу другой фильм
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
