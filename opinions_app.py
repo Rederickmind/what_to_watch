@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, url_for
+from flask import Flask, flash, redirect, render_template, url_for, abort
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 # функция выбора случайного значения
@@ -45,14 +45,27 @@ class OpinionForm(FlaskForm):
     submit = SubmitField('Добавить')
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    # В качестве ответа возвращается собственный шаблон
+    # и код ошибки
+    return render_template('404.html'), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    # В таких случаях можно откатить незафиксированные изменения в БД
+    db.session.rollback()
+    return render_template('500.html'), 500
+
+
 @app.route('/')
 def index_view():
     # Определяется количество мнений в базе данных
     quantity = Opinion.query.count()
     # Если мнений нет,
     if not quantity:
-        # то возвращается сообщение
-        return 'В базе данных мнений о фильмах нет.'
+        abort(404)
     # Иначе выбирается случайное число в диапазоне от 0 и до quantity
     offset_value = randrange(quantity)
     # И определяется случайный объект
@@ -63,21 +76,22 @@ def index_view():
 @app.route('/add', methods=['GET', 'POST'])
 def add_opinion_view():
     form = OpinionForm()
-    # Если ошибок не возникло, то
     if form.validate_on_submit():
-        # нужно создать новый экземпляр класса Opinion
+        text = form.text.data
+        # Если в БД уже есть мнение с текстом, который ввёл пользователь,
+        if Opinion.query.filter_by(text=text).first() is not None:
+            # вызвать функцию flash и передать соответствующее сообщение
+            flash('Такое мнение уже было оставлено ранее!')
+            # и вернуть пользователя на страницу «Добавить новое мнение»
+            return render_template('add_opinion.html', form=form)
         opinion = Opinion(
             title=form.title.data,
             text=form.text.data,
             source=form.source.data
         )
-        # Затем добавить его в сессию работы с базой данных
         db.session.add(opinion)
-        # И зафиксировать изменения
         db.session.commit()
-        # Затем перейти на страницу добавленного мнения
         return redirect(url_for('opinion_view', id=opinion.id))
-    # Иначе просто отрисовать страницу с формой
     return render_template('add_opinion.html', form=form)
 
 
