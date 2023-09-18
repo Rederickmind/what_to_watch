@@ -10,3 +10,13 @@ class Opinion(db.Model):
     source = db.Column(db.String(256))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     added_by = db.Column(db.String(64))
+
+    def to_dict(self):
+        return dict(
+            id=self.id,
+            title=self.title,
+            text=self.text,
+            source=self.source,
+            timestamp=self.timestamp,
+            added_by=self.added_by
+        )
