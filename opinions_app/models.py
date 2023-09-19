@@ -20,3 +20,14 @@ class Opinion(db.Model):
             timestamp=self.timestamp,
             added_by=self.added_by
         )
+
+    # Добавляем в модель метод-десериализатор.
+    # На вход метод принимает словарь data, полученный из JSON в запросе
+    def from_dict(self, data):
+        # Для каждого поля модели, которое можно заполнить...
+        for field in ['title', 'text', 'source', 'added_by']:
+            # ...выполняется проверка: есть ли ключ с таким же именем в словаре
+            if field in data:
+                # Если есть — добавляем значение из словаря
+                # в соответствующее поле объекта модели:
+                setattr(self, field, data[field])
