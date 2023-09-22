@@ -1,16 +1,16 @@
-from flask import Flask, flash, redirect, render_template, url_for, abort
-from flask_sqlalchemy import SQLAlchemy
+import csv
 from datetime import datetime
 # функция выбора случайного значения
 from random import randrange
+
+import click
+from flask import Flask, abort, flash, redirect, render_template, url_for
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 # Новые импорты
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, URLField
 from wtforms.validators import DataRequired, Length, Optional
-from flask_migrate import Migrate
-import csv
-import click
-
 
 app = Flask(__name__)
 

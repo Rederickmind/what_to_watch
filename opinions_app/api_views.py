@@ -4,9 +4,9 @@
 from flask import jsonify, request
 
 from . import app, db
+from .error_handlers import InvalidAPIUsage
 from .models import Opinion
 from .views import random_opinion
-from .error_handlers import InvalidAPIUsage
 
 
 # Явно разрешить метод GET
@@ -25,7 +25,7 @@ def get_opinion(id):
 def update_opinion(id):
     data = request.get_json()
     if (
-        'text' in data and 
+        'text' in data and
         Opinion.query.filter_by(text=data['text']).first() is not None
     ):
         raise InvalidAPIUsage('Такое мнение уже есть в базе данных')
