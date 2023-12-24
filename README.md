@@ -73,7 +73,7 @@ flask db upgrade
 ```
 flask load_opinions
 ```
-- Запуск приложения
+**Запуск приложения**
 ```
 flask run
 ```
