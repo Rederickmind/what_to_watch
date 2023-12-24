@@ -1,5 +1,3 @@
-# what_to_watch/settings.py
-
 import os
 
 
