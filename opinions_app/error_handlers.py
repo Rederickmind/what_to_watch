@@ -1,5 +1,3 @@
-# what_to_watch/opinions_app/error_handlers.py
-
 from flask import jsonify, render_template
 
 from . import app, db
@@ -9,13 +7,9 @@ class InvalidAPIUsage(Exception):
     # Если статус-код для ответа API не указан — вернётся код 400
     status_code = 400
 
-    # Конструктор класса InvalidAPIUsage принимает на вход
-    # текст сообщения и статус-код ошибки (необязательно)
     def __init__(self, message, status_code=None):
         super().__init__()
         self.message = message
-        # Если статус-код передан в конструктор —
-        # этот код вернётся в ответе
         if status_code is not None:
             self.status_code = status_code
 
